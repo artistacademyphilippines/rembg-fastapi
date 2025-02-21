@@ -21,6 +21,8 @@ async def remove_background(request: Request):
     # Get the base64 string from the request body
     data = await request.body()
 
+    return data
+    '''
     # Decode the base64 string to image
     img_data = base64.b64decode(data.split(b',')[1])
     
@@ -36,6 +38,7 @@ async def remove_background(request: Request):
 
     # Return the base64 string directly (without wrapping it in JSON)
     return f"data:image/png;base64,{new_base64}"
+    '''
 
 # Run with Uvicorn in the terminal
 # uvicorn main:app --host 0.0.0.0 --port 8000 --reload
