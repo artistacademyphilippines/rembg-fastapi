@@ -1,13 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from rembg import remove
 import base64
 from io import BytesIO
 
 app = FastAPI()
-
-app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 
 # Set up CORS middleware (equivalent to Flask-CORS)
 origins = ["http://127.0.0.1:5503", "https://artistacademyphilippines.github.io"]
@@ -17,8 +14,6 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    TrustedHostMiddleware, 
-    allowed_hosts=["*"]
 )
 
 @app.post("/")
@@ -26,8 +21,6 @@ async def remove_background(request: Request):
     # Get the base64 string from the request body
     data = await request.body()
 
-    return data
-    '''
     # Decode the base64 string to image
     img_data = base64.b64decode(data.split(',')[1])
     
@@ -43,7 +36,6 @@ async def remove_background(request: Request):
 
     # Return the base64 string directly (without wrapping it in JSON)
     return f"data:image/png;base64,{new_base64}"
-    '''
 
-# Run with Uvicorn in the terminal
-# uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+if __name__ == '__main__':
+    app.run(timeout=2400)
