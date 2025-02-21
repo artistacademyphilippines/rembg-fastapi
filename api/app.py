@@ -1,10 +1,13 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from rembg import remove
 import base64
 from io import BytesIO
 
 app = FastAPI()
+
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=["*"])
 
 # Set up CORS middleware (equivalent to Flask-CORS)
 origins = ["http://127.0.0.1:5503", "https://artistacademyphilippines.github.io"]
@@ -14,6 +17,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    TrustedHostMiddleware, 
+    allowed_hosts=["*"]
 )
 
 @app.post("/")
