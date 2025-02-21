@@ -24,7 +24,7 @@ async def remove_background(request: Request):
     return data
     '''
     # Decode the base64 string to image
-    img_data = base64.b64decode(data.split(b',')[1])
+    img_data = base64.b64decode(data.split(',')[1])
     
     # Process the image with rembg to remove the background
     removed_background = remove(img_data, post_process_mask=True)
