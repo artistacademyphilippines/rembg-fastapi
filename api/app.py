@@ -1,6 +1,17 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Add CORS middleware to allow your frontend to access the FastAPI app
+origins = ["http://127.0.0.1:5503", "https://artistacademyphilippines.github.io"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows these origins to make requests
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 @app.post('/')
 def index():
