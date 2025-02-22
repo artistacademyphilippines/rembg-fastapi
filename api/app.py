@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -14,8 +14,9 @@ app.add_middleware(
 )
 
 @app.post('/')
-def index():
-    return 'pukeng ina gumana!'
+async def index(request: Request):
+    data = await request.body()
+    print(data)
     
 '''
 from fastapi import FastAPI, Request
