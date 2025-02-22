@@ -24,7 +24,7 @@ class RequestData(BaseModel):
     
 @app.post('/')
 
-async def resend(request_data: RequestData):
+async def remove_background(request_data: RequestData):
 
     # Decode the base64 string to image
     img_data = base64.b64decode(request_data.data_sent.split(',')[1])
