@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from pydantic import BaseModel #pydantic is to handle fastAPI request and response
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -13,10 +14,14 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+# Define a Pydantic model to represent the request body
+class RequestData(BaseModel):
+    image_data: str
+    
 @app.post('/')
-async def index(request: Request):
-    data = await request.body()
-    print(data)
+
+async def echo(request_data: RequestData):
+    return {"received_message": request_data.image_data}
     
 '''
 from fastapi import FastAPI, Request
