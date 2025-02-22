@@ -1,3 +1,12 @@
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.post('/')
+def index():
+    return 'pukeng ina gumana!'
+    
+'''
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -39,3 +48,4 @@ async def remove_background(request: Request):
 
     # Return the base64 string directly as HTML response (image data)
     return f"data:image/png;base64,{new_base64}"
+'''
