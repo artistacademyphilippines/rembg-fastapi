@@ -2,6 +2,10 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel #pydantic is to handle fastAPI request and response
 from fastapi.middleware.cors import CORSMiddleware
 
+from rembg import remove
+import base64
+from io import BytesIO
+
 app = FastAPI()
 
 # Add CORS middleware to allow your frontend to access the FastAPI app
@@ -16,12 +20,29 @@ app.add_middleware(
 
 # Define a Pydantic model to represent the request body
 class RequestData(BaseModel):
-    received_data: str
+    data_sent: str
     
 @app.post('/')
 
 async def resend(request_data: RequestData):
-    return {"response_data": request_data.received_data}
+
+    # Decode the base64 string to image
+    img_data = base64.b64decode(request_data.data_sent.split(',')[1])
+
+    # Process the image with rembg to remove the background
+    removed_background = remove(img_data, post_process_mask=True)
+
+    # Convert the result into a binary format
+    new_data = BytesIO(removed_background)
+    new_data.seek(0)
+
+    # Convert binary to base64 format and decode again to text format
+    new_base64 = base64.b64encode(new_data.getvalue()).decode('utf-8')
+
+    # Return the base64 string directly as HTML response (image data)
+    data_received = f"data:image/png;base64,{new_base64}"
+    
+    return {"response_data": data_received}
     
 '''
 from fastapi import FastAPI, Request
