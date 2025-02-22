@@ -42,7 +42,7 @@ async def remove_background(request_data: RequestData):
     # Return the base64 string directly as HTML response (image data)
     data_received = f"data:image/png;base64,{new_base64}"
     
-    return {"response_data": data_received}
+    return {"data_received": data_received}
     
 '''
 from fastapi import FastAPI, Request
