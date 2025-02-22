@@ -16,12 +16,12 @@ app.add_middleware(
 
 # Define a Pydantic model to represent the request body
 class RequestData(BaseModel):
-    image_data: str
+    received_data: str
     
 @app.post('/')
 
-async def echo(request_data: RequestData):
-    return {"received_message": request_data.image_data}
+async def resend(request_data: RequestData):
+    return {"response_data": request_data.received_data}
     
 '''
 from fastapi import FastAPI, Request
