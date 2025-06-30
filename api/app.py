@@ -44,7 +44,3 @@ async def remove_background(request_data: RequestData): #get object and pass it 
     data_received = f"data:image/png;base64,{new_base64}"
     
     return {"data_received": data_received}
-
-@app.get('/health')
-async def health():
-    return {"status": "ok"}
